@@ -14,9 +14,11 @@ app.get('/', (req, res) => {
     res.json({"message": "Welcome to Online Delivery System Backend API."});
 });
 
-
 mongoose
-    .connect(dbConfig.onlineurl, {
+   //localhost
+.connect(dbConfig.url,{
+ //online
+    // .connect(dbConfig.onlineurl, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true
@@ -24,15 +26,15 @@ mongoose
     .then(() => console.log("MongoDB Connected"))
     .catch(err => console.log(err))
 
-var Users = require('./routes/Users')
-// <<<<<<< HEAD
-var Sellers=require('./routes/Sellers')
-// =======
-// >>>>>>> 10fa51c45f85246c1e7e0ef8a5a3def096af9601
-app.use('/users',Users)
-app.use('/sellers',Sellers)
+// var Users = require('./routes/Users')
+// // <<<<<<< HEAD
+// var Sellers=require('./routes/Sellers')
+// // =======
+// // >>>>>>> 10fa51c45f85246c1e7e0ef8a5a3def096af9601
+// app.use('/users',Users)
+// app.use('/sellers',Sellers)
 
-
+require('./routes/customerDetails')(app);
 require('./routes/sellerDetails')(app);
 
 app.listen(port, function () {

@@ -12,7 +12,7 @@ exports.create = (req, res, next) => {
 
      // Create a Seller
      const seller = new Seller({
-        businessmodel: req.body.businessmodel,
+        businessModel: req.body.businessModel,
         name: req.body.name, 
         shopName: req.body.shopName,
         businessID: req.body.businessID,

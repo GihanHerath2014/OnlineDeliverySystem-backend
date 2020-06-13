@@ -1,35 +1,44 @@
-const express = require("express")
-const users = express.Router()
+const Customer = require('../models/customerDetails');
+const bcrypt = require("bcrypt");
+
 const cors = require("cors")
 const jwt = require("jsonwebtoken")
-const bcrypt = require("bcrypt")
 
-const User = require("../models/User")
-users.use(cors())
-
+//secret key for password (token type)
 process.env.SECRET_KEY = 'secret'
 
-//data register in DB
-users.post('/register', (req, res) => {
+//Create and Save a new Customer
+exports.register=(req,res,next)=>{
+
+    //get today date
     const today = new Date()
-    const userData = {
+
+    //fix the usertype
+    const u_type="customer";
+
+    //Create a new customer 
+    const customerData ={
         first_name: req.body.first_name,
         last_name: req.body.last_name,
+        address: req.body.address,
+        personalPhone: req.body.personalPhone,
+        officePhone: req.body.officePhone,
         email: req.body.email,
         password: req.body.password,
-        user_type:req.body.user_type,
+        user_type:u_type,
         created: today
     }
-
-    User.findOne({
+    
+    Customer.findOne({ //find the email
         email: req.body.email
     })
         .then(user => {
-            if (!user) {
+            if (!user) {   //if it is not a customer
                 bcrypt.hash(req.body.password, 10, (err, hash) => {
-                    userData.password = hash
-                    User.create(userData)
+                    customerData.password = hash  //password create hash marks
+                    Customer.create(customerData)
                         .then(user => {
+                            res.send(user);
                             res.json({ status: user.email + 'Registered' })
                         })
                         .catch(err => {
@@ -43,16 +52,18 @@ users.post('/register', (req, res) => {
         .catch(err => {
             res.send('error:' + err)
         })
-})
+}
 
-users.post('/login', (req, res) => {
-    User.findOne({
+
+//login part
+exports.login=(req,res,next)=>{
+    Customer.findOne({
         email: req.body.email
     })
         .then(user => {
             if (user) {
                 if(bcrypt.compareSync(req.body.password,user.password)){
-                    const payload={
+                    const payload={//you can add any thing to token (same you can get the details by the token)
                         _id:user._id,
                         first_name:user.first_name,
                         last_name:user.last_name,
@@ -61,9 +72,11 @@ users.post('/login', (req, res) => {
                     }
 
                     let token=jwt.sign(payload,process.env.SECRET_KEY,{
-                        expiresIn:1440
+                        expiresIn:1440,
+                        
                     })
                     res.json({token:token})
+                    res.json(payload)
                 }else{
                     res.json({error:"User does not exist"})
                 }
@@ -74,13 +87,14 @@ users.post('/login', (req, res) => {
         .catch(err=>{
             res.send('error:'+err)
         })
-})
+}
 
-users.get('/profile',(req,res)=>{
-    // res.json({ status: 'ccccccccccccccc' })
+//view customer profile
+exports.profile=(req,res,next)=>{
+
     var decoded = jwt.verify(req.headers['authorization'],process.env.SECRET_KEY)
 
-    User.findOne({
+    Customer.findOne({
         _id:decoded._id
     })
     .then(user=>{
@@ -93,10 +107,12 @@ users.get('/profile',(req,res)=>{
     .catch(err=>{
         res.send('error'+err)
     })
-})
+}
 
-users.get('/details',(req,res)=>{
-    User.find({})
+
+//get All customer details for customer table
+exports.getDetails=(req,res,next)=>{
+    Customer.find({})
     .then(user=>{
         if(user){
             res.json(user)
@@ -107,25 +123,7 @@ users.get('/details',(req,res)=>{
     .catch(err=>{
         res.send('error'+err)
     })
-})
+}
 
-users.post('/details_update',(req,res)=>{
-    User.findOne({email: req.body.email}
-        ,{
-        $set:{
-            "first_name":req.body.first_name
-        }
-    },{new:true},
-    (err,doc)=>{
-        if(!err){
-            console.log(req.User.first_name)
-            console.log(req.User.body.first_name)
-        }
-        else{
-            console.log('Error during recod')
-        }
-    })
 
-})
 
-module.exports = users
