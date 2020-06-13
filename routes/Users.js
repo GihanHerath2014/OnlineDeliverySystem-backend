@@ -17,6 +17,7 @@ users.post('/register', (req, res) => {
         last_name: req.body.last_name,
         email: req.body.email,
         password: req.body.password,
+        user_type:req.body.user_type,
         created: today
     }
 
@@ -55,7 +56,8 @@ users.post('/login', (req, res) => {
                         _id:user._id,
                         first_name:user.first_name,
                         last_name:user.last_name,
-                        email:user.email
+                        email:user.email,
+                        user_type:user.user_type
                     }
 
                     let token=jwt.sign(payload,process.env.SECRET_KEY,{
@@ -75,7 +77,8 @@ users.post('/login', (req, res) => {
 })
 
 users.get('/profile',(req,res)=>{
-    var decode = jwt.verify(req.headers['authorization'],process.env.SECRET_KEY)
+    // res.json({ status: 'ccccccccccccccc' })
+    var decoded = jwt.verify(req.headers['authorization'],process.env.SECRET_KEY)
 
     User.findOne({
         _id:decoded._id
@@ -90,6 +93,39 @@ users.get('/profile',(req,res)=>{
     .catch(err=>{
         res.send('error'+err)
     })
+})
+
+users.get('/details',(req,res)=>{
+    User.find({})
+    .then(user=>{
+        if(user){
+            res.json(user)
+        }else{
+            res.send("User does not exist")
+        }
+    })
+    .catch(err=>{
+        res.send('error'+err)
+    })
+})
+
+users.post('/details_update',(req,res)=>{
+    User.findOne({email: req.body.email}
+        ,{
+        $set:{
+            "first_name":req.body.first_name
+        }
+    },{new:true},
+    (err,doc)=>{
+        if(!err){
+            console.log(req.User.first_name)
+            console.log(req.User.body.first_name)
+        }
+        else{
+            console.log('Error during recod')
+        }
+    })
+
 })
 
 module.exports = users
