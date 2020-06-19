@@ -8,27 +8,27 @@ const jwt = require("jsonwebtoken")
 process.env.SECRET_KEY = 'secret'
 
 //Create and Save a new Customer
-exports.register=(req,res,next)=>{
+exports.register = (req, res, next) => {
 
     //get today date
     const today = new Date()
 
     //fix the usertype
-    const u_type="customer";
+    // const u_type = "customer";
 
     //Create a new customer 
-    const customerData ={
+    const customerData = {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         address: req.body.address,
-        personalPhone: req.body.personalPhone,
-        officePhone: req.body.officePhone,
+        // personalPhone: req.body.personalPhone,
+        // officePhone: req.body.officePhone,
         email: req.body.email,
         password: req.body.password,
-        user_type:u_type,
+        user_type: req.body.user_type,
         created: today
     }
-    
+
     Customer.findOne({ //find the email
         email: req.body.email
     })
@@ -56,73 +56,73 @@ exports.register=(req,res,next)=>{
 
 
 //login part
-exports.login=(req,res,next)=>{
+exports.login = (req, res, next) => {
     Customer.findOne({
         email: req.body.email
     })
         .then(user => {
             if (user) {
-                if(bcrypt.compareSync(req.body.password,user.password)){
-                    const payload={//you can add any thing to token (same you can get the details by the token)
-                        _id:user._id,
-                        first_name:user.first_name,
-                        last_name:user.last_name,
-                        email:user.email,
-                        user_type:user.user_type
+                if (bcrypt.compareSync(req.body.password, user.password)) {
+                    const payload = {//you can add any thing to token (same you can get the details by the token)
+                        _id: user._id,
+                        first_name: user.first_name,
+                        last_name: user.last_name,
+                        email: user.email,
+                        user_type: user.user_type
                     }
 
-                    let token=jwt.sign(payload,process.env.SECRET_KEY,{
-                        expiresIn:1440,
-                        
+                    let token = jwt.sign(payload, process.env.SECRET_KEY, {
+                        expiresIn: 1440,
+
                     })
-                    res.json({token:token})
+                    res.json({ token: token })
                     res.json(payload)
-                }else{
-                    res.json({error:"User does not exist"})
+                } else {
+                    res.json({ error: "User does not exist" })
                 }
-            }else{
-                res.json({error:"User does not exist"})
+            } else {
+                res.json({ error: "User does not exist" })
             }
         })
-        .catch(err=>{
-            res.send('error:'+err)
+        .catch(err => {
+            res.send('error:' + err)
         })
 }
 
 //view customer profile
-exports.profile=(req,res,next)=>{
+exports.profile = (req, res, next) => {
 
-    var decoded = jwt.verify(req.headers['authorization'],process.env.SECRET_KEY)
+    var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)
 
     Customer.findOne({
-        _id:decoded._id
+        _id: decoded._id
     })
-    .then(user=>{
-        if(user){
-            res.json(user)
-        }else{
-            res.send("User does not exist")
-        }
-    })
-    .catch(err=>{
-        res.send('error'+err)
-    })
+        .then(user => {
+            if (user) {
+                res.json(user)
+            } else {
+                res.send("User does not exist")
+            }
+        })
+        .catch(err => {
+            res.send('error' + err)
+        })
 }
 
 
 //get All customer details for customer table
-exports.getDetails=(req,res,next)=>{
+exports.getDetails = (req, res, next) => {
     Customer.find({})
-    .then(user=>{
-        if(user){
-            res.json(user)
-        }else{
-            res.send("User does not exist")
-        }
-    })
-    .catch(err=>{
-        res.send('error'+err)
-    })
+        .then(user => {
+            if (user) {
+                res.json(user)
+            } else {
+                res.send("User does not exist")
+            }
+        })
+        .catch(err => {
+            res.send('error' + err)
+        })
 }
 
 
