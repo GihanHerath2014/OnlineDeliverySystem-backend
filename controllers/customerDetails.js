@@ -42,7 +42,7 @@ exports.register = (req, res, next) => {
                             res.json({ status: user.email + 'Registered' })
                         })
                         .catch(err => {
-                            res.send('error:' + err)
+                            res.send( err)
                         })
                 })
             } else {

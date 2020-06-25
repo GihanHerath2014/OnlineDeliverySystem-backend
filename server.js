@@ -26,6 +26,8 @@ mongoose
 
 require('./routes/customerDetails')(app);
 require('./routes/sellerDetails')(app);
+require('./routes/productDetails')(app);
+require('./routes/electronic')(app);
 
 app.listen(port, function () {
     console.log("Server is running on port: " + port)
