@@ -41,6 +41,7 @@ const SellerDetailsSchema = new Schema({
                 'Please add a valid email'
             ]
         },
+
         password: {
             type: String,
             required: [true, 'Please add a password']
@@ -48,7 +49,12 @@ const SellerDetailsSchema = new Schema({
         repassword: {
             type: String,
             required: [true, 'Please add a same password']
-        }
+        },
+      
+        statues:{
+            type: String,
+            required: [true, 'Please add a password']
+        },
 
 
     }

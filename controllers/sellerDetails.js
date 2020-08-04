@@ -132,6 +132,7 @@ exports.create = (req, res, next) => {
         email: req.body.email,
         password: req.body.password,
         repassword: req.body.repassword,
+        statues:req.body.statues,
     });
 
     // Save Seller in the database
@@ -239,6 +240,38 @@ exports.delete = (req, res) => {
             }
             return res.status(500).send({
                 message: "Could not delete seller with id " + req.params._Id
+            });
+        });
+};
+
+
+exports.updateStatues = (req, res, next) => {
+    // Validate Request
+    // if(!req.body.content) {
+    //     return res.status(400).send({
+    //         message: "Seller content can not be empty"
+    //     });
+    // }
+
+    // Find seller and update it with the request body
+    Seller.findByIdAndUpdate(req.params._Id, {
+        statues: req.body.statues,
+    }, { new: true })
+        .then(seller => {
+            if (!seller) {
+                return res.status(404).send({
+                    message: "Seller not found with id " + req.params._Id
+                });
+            }
+            res.send(seller);
+        }).catch(err => {
+            if (err.kind === 'ObjectId') {
+                return res.status(404).send({
+                    message: "Seller not found with id " + req.params._Id
+                });
+            }
+            return res.status(500).send({
+                message: "Error updating seller with id " + req.params._Id
             });
         });
 };

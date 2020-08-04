@@ -13,6 +13,10 @@ module.exports = (app) => {
     // Update a Seller with _Id
     app.put('/sellers/:_Id', sellers.update);
 
+    // Update a Seller with _Id
+    app.put('/sellers/statuesUpdate/:_Id', sellers.updateStatues);
+
+
     // Delete a Seller with _Id
     app.delete('/sellers/:_Id', sellers.delete);
 }

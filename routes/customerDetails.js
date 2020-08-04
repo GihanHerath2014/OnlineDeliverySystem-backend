@@ -13,5 +13,7 @@ module.exports = (app) => {
     // get all customer details for table
     app.post('/customersDetails', customer.getDetails);
 
+    app.get('/customers/alldata', customer.findAll);
+
 
 }

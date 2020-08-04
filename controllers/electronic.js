@@ -27,16 +27,6 @@ exports.create = (req, res, next) => {
 };
 
 
-
-
-
-
-
-
-
-
-
-
 // Retrieve and return all sellers from the database.
 exports.findAll = (req, res) => {
     electronic.find()

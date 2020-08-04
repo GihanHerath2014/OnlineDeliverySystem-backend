@@ -127,3 +127,16 @@ exports.getDetails = (req, res, next) => {
 
 
 
+exports.findAll = (req, res) => {
+    Customer.find()
+        .then(user => {
+            res.send(user);
+        }).catch(err => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving seller."
+            });
+        });
+};
+
+
+
