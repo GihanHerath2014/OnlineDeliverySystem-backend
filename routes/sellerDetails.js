@@ -2,7 +2,7 @@ module.exports = (app) => {
     const sellers = require('../controllers/sellerDetails');
 
     // Create a new Seller
-    app.post('/sellers', sellers.create);
+    app.post('/sellers', sellers.create1);
 
     // Retrieve all Sellers
     app.get('/sellers', sellers.findAll);

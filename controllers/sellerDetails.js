@@ -1,5 +1,9 @@
 const Seller = require('../models/sellerDetails');
+const bcrypt = require("bcrypt");
 
+
+const cors = require("cors")
+const jwt = require("jsonwebtoken")
 
 //secret key for password (token type)
 process.env.SECRET_KEY = 'secret'
@@ -132,8 +136,8 @@ exports.create = (req, res, next) => {
         officePhone: req.body.officePhone,
         email: req.body.email,
         password: req.body.password,
-        repassword: req.body.repassword,
-        statues:req.body.statues,
+        // repassword: req.body.repassword,
+        // statues:req.body.statues,
     });
 
     // Save Seller in the database

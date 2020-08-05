@@ -66,8 +66,8 @@ exports.login = (req, res, next) => {
                 if (bcrypt.compareSync(req.body.password, user.password)) {
                     const payload = {//you can add any thing to token (same you can get the details by the token)
                         _id: user._id,
-                        first_name: user.first_name,
-                        last_name: user.last_name,
+                        full_name: user.full_name,
+                        // last_name: user.last_name,
                         email: user.email,
                         user_type: user.user_type
                     }

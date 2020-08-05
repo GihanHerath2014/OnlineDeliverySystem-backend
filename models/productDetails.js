@@ -34,6 +34,7 @@ const productDetailsSchema = new Schema({
         //     required: [true, 'Please add a name']
         // },
        
+        
 
     }
 );
