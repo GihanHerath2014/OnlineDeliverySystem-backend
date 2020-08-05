@@ -19,4 +19,7 @@ module.exports = (app) => {
 
     // Delete a Seller with _Id
     app.delete('/sellers/:_Id', sellers.delete);
+
+    //get acess to login by email and user type
+    app.post('/sellers/login', sellers.login);
 }

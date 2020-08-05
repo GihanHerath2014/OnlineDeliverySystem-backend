@@ -2,11 +2,12 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const UserDetailsSchema = new Schema({
-    first_name: {
+
+    full_name: {
         type: String,
         required: [true, 'Please add a first_name']
     },
-    last_name: {
+    conatct: {
         type: String,
         required: [true, 'Please add a last_name']
     },
@@ -14,10 +15,11 @@ const UserDetailsSchema = new Schema({
         type: String,
         required: [true, 'Please add an address']
     },
-    // personalPhone: {
-    //     type: String,
-    //     maxlength: [10, 'Phone number can not be longer than 20 characters']
-    // },
+    postalcode: {
+        type: String,
+        required: [true, 'Please add an postalcode']
+        // maxlength: [10, 'Phone number can not be longer than 20 characters']
+    },
     // officePhone: {
     //     type: String,
     //     maxlength: [10, 'Phone number can not be longer than 20 characters']
@@ -46,4 +48,4 @@ const UserDetailsSchema = new Schema({
     }
 })
 
-module.exports = mongoose.model('customerDetails', UserDetailsSchema)
+module.exports = mongoose.model('customerDetails_gg', UserDetailsSchema)

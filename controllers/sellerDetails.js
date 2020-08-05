@@ -1,91 +1,92 @@
 const Seller = require('../models/sellerDetails');
 
 
-// //secret key for password (token type)
-// process.env.SECRET_KEY = 'secret'
+//secret key for password (token type)
+process.env.SECRET_KEY = 'secret'
 
-// //Create and Save a new Customer
-// exports.create = (req, res, next) => {
+//Create and Save a new seller
+exports.create1 = (req, res, next) => {
 
-//     //get today date
-//     const today = new Date()
+    //get today date
+    const today = new Date()
 
-//     //fix the usertype
-//     // const u_type = "customer";
+    //fix the usertype
+    // const u_type = "customer";
 
-//     //Create a new customer 
-//     const seller = {
-//         businessModel: req.body.businessModel,
-//         name: req.body.name,
-//         shopName: req.body.shopName,
-//         businessID: req.body.businessID,
-//         address: req.body.address,
-//         personalPhone: req.body.personalPhone,
-//         officePhone: req.body.officePhone,
-//         email: req.body.email,
-//         password: req.body.password,
-//         repassword: req.body.repassword,
-//     }
+    //Create a new customer 
+    const sellerData = {
+        businessModel: req.body.businessModel,
+        name: req.body.name,
+        shopName: req.body.shopName,
+        businessID: req.body.businessID,
+        address: req.body.address,
+        personalPhone: req.body.personalPhone,
+        officePhone: req.body.officePhone,
+        email: req.body.email,
+        password: req.body.password,
+        repassword: req.body.repassword,
+    }
 
-//     Seller.findOne({ //find the email
-//         email: req.body.email
-//     })
-//         .then(user => {
-//             if (!user) {   //if it is not a customer
-//                 bcrypt.hash(req.body.password, 10, (err, hash) => {
-//                     customerData.password = hash  //password create hash marks
-//                     Customer.create(customerData)
-//                         .then(user => {
-//                             res.send(user);
-//                             res.json({ status: user.email + 'Registered' })
-//                         })
-//                         .catch(err => {
-//                             res.send('error:' + err)
-//                         })
-//                 })
-//             } else {
-//                 res.json({ error: "User already exists" })
-//             }
-//         })
-//         .catch(err => {
-//             res.send('error:' + err)
-//         })
-// }
+    Seller.findOne({ //find the email
+        email: req.body.email
+    })
+        .then(user => {
+            if (!user) {   //if it is not a customer
+                bcrypt.hash(req.body.password, 10, (err, hash) => {
+                    sellerData.password = hash  //password create hash marks
+                    Seller.create(sellerData)
+                        .then(user => {
+                            res.send(user);
+                            res.json({ status: user.email + 'Registered' })
+                        })
+                        .catch(err => {
+                            res.send('error:' + err)
+                        })
+                })
+            } else {
+                res.json({ error: "User already exists" })
+                
+            }
+        })
+        .catch(err => {
+            res.send('error:' + err)
+        })
+}
 
 
 
-// exports.login = (req, res, next) => {
-//     Seller.findOne({
-//         email: req.body.email
-//     })
-//         .then(user => {
-//             if (user) {
-//                 if (bcrypt.compareSync(req.body.password, user.password)) {
-//                     const payload = {//you can add any thing to token (same you can get the details by the token)
-//                         // _id: user._id,
-//                         // businessModel: user.businessModel,
-//                         // last_name: user.last_name,
-//                         // email: user.email,
-//                         // user_type: user.user_type
-//                     }
+exports.login = (req, res, next) => {
+    Seller.findOne({
+        email: req.body.email
+    })
+        .then(user => {
+            if (user) {
+                if (bcrypt.compareSync(req.body.password, user.password)) {
+                    const payload = {//you can add any thing to token (same you can get the details by the token)
+                        _id: user._id,
+                        // businessModel: user.businessModel,
+                        // last_name: user.last_name,
+                        // email: user.email,
+                        // user_type: user.user_type
+                    }
 
-//                     let token = jwt.sign(payload, process.env.SECRET_KEY, {
-//                         expiresIn: 1440,
+                    let token = jwt.sign(payload, process.env.SECRET_KEY, {
+                        expiresIn: 1440,
 
-//                     })
-//                     res.json({ token: token })
-//                     res.json(payload)
-//                 } else {
-//                     res.json({ error: "User does not exist" })
-//                 }
-//             } else {
-//                 res.json({ error: "User does not exist" })
-//             }
-//         })
-//         .catch(err => {
-//             res.send('error:' + err)
-//         })
-// }
+                    })
+                    res.json({ token: token })
+                    res.json(payload)
+                } else {
+                    res.json({ error: "User does not exist" })
+                }
+            } else {
+                res.json({ error: "User does not exist" })
+            }
+        })
+        .catch(err => {
+            res.send('error:' + err)
+        })
+}
 
 
 // exports.profile = (req, res, next) => {

@@ -18,10 +18,11 @@ exports.register = (req, res, next) => {
 
     //Create a new customer 
     const customerData = {
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
+
+        full_name: req.body.full_name,
+        conatct: req.body.conatct,
         address: req.body.address,
-        // personalPhone: req.body.personalPhone,
+        postalcode: req.body.postalcode,
         // officePhone: req.body.officePhone,
         email: req.body.email,
         password: req.body.password,

@@ -15,8 +15,7 @@ app.get('/', (req, res) => {
 });
 
 mongoose
-    // .connect(dbConfig.url, {                        //localhost
-        .connect(dbConfig.onlineurl, {          //online
+    .connect(dbConfig.url, {  
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true
