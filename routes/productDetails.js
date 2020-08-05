@@ -1,21 +1,33 @@
 module.exports = (app) => {
-    const products = require('../controllers/productDetails');
+  const {
+    create,
+    findAll,
+    findaaa,
+    uploadProductPhotoUpload,
+    update,
+    deleteProduct,
+    getproduct,
+  } = require("../controllers/productDetails");
 
-    // Create a new Product
-    app.post('/products/register', products.create);
+  // Create a new Product
+  app.post("/products/register", create);
 
-    // Retrieve all Product
-    app.get('/products/list', products.findAll);
+  // Retrieve all Product
+  app.get("/products/list", findAll);
 
-    // Retrieve a single Product with category
-    app.get('/products/:category', products.findaaa);
+  // Retrieve a single Product with category
+  app.get("/products/:category", findaaa);
 
-    // Update a Product with _Id
-    app.put('/products/:_Id', products.update);
+  // Update a Product with _Id
+  app.put("/products/:_Id", update);
 
-    // Delete a Product with _Id
-    app.delete('/products/:_Id', products.deleteProduct);
+  // Delete a Product with _Id
+  app.delete("/products/:_Id", deleteProduct);
 
-    // Retrieve a single Product with category
-    // app.get('/products/:category?:shopname', products.findaaa);
-}
+  app.put("/products/list/:_id/photo", uploadProductPhotoUpload);
+
+  // Retrieve a single Product with category
+  // app.get('/products/:category?:shopname', products.findaaa);
+
+  app.get("/products/list/:_id/", getproduct);
+};
