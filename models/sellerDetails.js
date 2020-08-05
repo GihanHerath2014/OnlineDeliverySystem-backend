@@ -46,15 +46,15 @@ const SellerDetailsSchema = new Schema({
             type: String,
             required: [true, 'Please add a password']
         },
-        repassword: {
-            type: String,
-            required: [true, 'Please add a same password']
-        },
+        // repassword: {
+        //     type: String,
+        //     required: [true, 'Please add a same password']
+        // },
       
-        statues:{
-            type: String,
-            required: [true, 'Please add a password']
-        },
+        // statues:{
+        //     type: String,
+        //     required: [true, 'Please add a password']
+        // },
 
 
     }
