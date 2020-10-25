@@ -1,4 +1,5 @@
 const Product = require("../models/productDetails");
+const ProductImg =require("../models/productImg");
 const asyncHandler = require("../middleware/async");
 const ErrorResponse = require("../utils/errorResponse");
 const path = require("path");
@@ -25,6 +26,7 @@ exports.create = (req, res, next) => {
       });
     });
 };
+
 
 // // Retrieve and return all sellers from the database.
 exports.findAll = (req, res) => {
@@ -65,7 +67,7 @@ exports.findaaa = (req, res) => {
 };
 
 // Update a Product identified by the _Id in the request
-exports.update = (req, res, next) => {
+exports.update = (req, res, next) => {  
   Product.findByIdAndUpdate(
     req.params._Id,
     {
@@ -73,7 +75,8 @@ exports.update = (req, res, next) => {
       uniPrice: req.body.uniPrice,
       availableQuantity: req.body.availableQuantity,
       category: req.body.category,
-      // shopname: req.body.shopname,
+      // add new image 
+     // imgPath: req.body.imgPath,
     },
     { new: true }
   )
@@ -207,3 +210,80 @@ exports.getproduct = asyncHandler(async (req, res, next) => {
   }
   res.status(200).json({ success: true, data: product });
 });
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+exports.createProductPhotoPath = asyncHandler(async(req, res, next) => {
+ // const product = await Product.findById(req.params._id);
+
+  // if (!product) {
+  //   return next(
+  //     new ErrorResponse(`procuct not found with id of ${req.params._id}`, 404)
+  //   );
+  // }
+
+  if (!req.files) {
+    return next(new ErrorResponse("Please upload a file", 400));
+  }
+
+  const file = req.files.file;
+
+  // Make sure the image is a photo
+  if (!file.mimetype.startsWith("image")) {
+    return next(new ErrorResponse(`Please upload an image file`, 400));
+  }
+
+  // Check filesize
+  if (file.size > process.env.MAX_FILE_UPLOAD) {
+    return next(
+      new ErrorResponse(
+        `Please upload an image less than ${process.env.MAX_FILE_UPLOAD}`,
+        400
+      )
+    );
+  }
+  // Create custom filename
+  file.name = `photo_${"fgd"}${path.parse(file.name).ext}`;
+  var imgPath = 'd/public/upload/'+file.name ;
+
+  file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async (err) => {
+    const productImg = new ProductImg ({
+      // _Id: req.body.id,
+      productName: req.body.productName,
+      imagePath: imgPath,
+    });
+
+    productImg
+    .save()
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the seller.",
+      });
+    });
+  
+    if (err) {
+      console.error(err);
+      return next(new ErrorResponse(`Problem with file upload`, 500));
+    }
+
+   // await Product.findByIdAndUpdate(req.params.id, { photo: file.name });
+
+    res.status(200).json({
+      success: true,
+      data: file.name,
+    });
+  });
+
+
+  // Create a Product
+ 
+  // Save Product in the database
+ 
+});
+

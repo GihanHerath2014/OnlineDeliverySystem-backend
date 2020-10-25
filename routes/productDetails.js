@@ -7,6 +7,7 @@ module.exports = (app) => {
     update,
     deleteProduct,
     getproduct,
+    createProductPhotoPath
   } = require("../controllers/productDetails");
 
   // Create a new Product
@@ -30,4 +31,6 @@ module.exports = (app) => {
   // app.get('/products/:category?:shopname', products.findaaa);
 
   app.get("/products/list/:_id/", getproduct);
+
+  app.put("/products1/list/photo", createProductPhotoPath);
 };
