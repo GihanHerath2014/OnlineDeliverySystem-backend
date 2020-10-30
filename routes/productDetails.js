@@ -25,12 +25,13 @@ module.exports = (app) => {
   // Delete a Product with _Id
   app.delete("/products/:_Id", deleteProduct);
 
-  app.put("/products/list/:_id/photo", uploadProductPhotoUpload);
+ // app.put("/products/list/:_id/photo", uploadProductPhotoUpload);
 
   // Retrieve a single Product with category
   // app.get('/products/:category?:shopname', products.findaaa);
 
-  app.get("/products/list/:_id/", getproduct);
+ // app.get("/products/list/:_id/", getproduct);
 
-  app.put("/products1/list/photo", createProductPhotoPath);
+ // app.put("/products1/list/photo", createProductPhotoPath);
+ 
 };

@@ -33,9 +33,11 @@ const productDetailsSchema = new Schema({
         //     type: String,
         //     required: [true, 'Please add a name']
         // },
+        imgName: {
+            type: String,
+            required: [false, 'Please upload a valid image']
+        },
        
-        
-
     }
 );
 module.exports = mongoose.model('productDetails', productDetailsSchema);

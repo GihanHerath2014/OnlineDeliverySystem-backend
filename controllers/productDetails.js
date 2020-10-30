@@ -11,6 +11,7 @@ exports.create = (req, res, next) => {
     uniPrice: req.body.uniPrice,
     availableQuantity: req.body.availableQuantity,
     category: req.body.category,
+    imgName: req.body.imgName
   });
 
   // Save Product in the database
@@ -150,6 +151,7 @@ exports.deleteProduct = (req, res) => {
 // @desc      upload photo for product
 // @route     upload
 // @access    Private
+/*
 exports.uploadProductPhotoUpload = asyncHandler(async (req, res, next) => {
   const product = await Product.findById(req.params._id);
 
@@ -280,10 +282,9 @@ exports.createProductPhotoPath = asyncHandler(async(req, res, next) => {
     });
   });
 
-
   // Create a Product
- 
   // Save Product in the database
+
  
-});
+});   */
 
