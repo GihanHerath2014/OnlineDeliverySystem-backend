@@ -36,6 +36,7 @@ require("./routes/customerDetails")(app);
 require("./routes/sellerDetails")(app);
 require("./routes/productDetails")(app);
 require("./routes/electronic")(app);
+require("./routes/cartdetails")(app);
 
 
 /* ----------------------------------------- image upload ---------------------------------- */
