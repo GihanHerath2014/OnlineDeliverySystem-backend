@@ -47,4 +47,4 @@ const UserDetailsSchema = new Schema({
     }
 })
 
-module.exports = mongoose.model('customerDetails_gg', UserDetailsSchema)
+module.exports = mongoose.model('customerdetails_ggs', UserDetailsSchema)

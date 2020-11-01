@@ -67,7 +67,10 @@ exports.login = (req, res, next) => {
                     const payload = {//you can add any thing to token (same you can get the details by the token)
                         _id: user._id,
                         full_name: user.full_name,
-                        // last_name: user.last_name,
+                        // last_name: user.last_name,  
+                        conatct : user.conatct,
+                        address : user.address,
+                        postalcode : user.postalcode,
                         email: user.email,
                         user_type: user.user_type
                     }
