@@ -36,4 +36,28 @@ exports.create = (req, res, next) => {
     });
 }
 
+exports.findHistory = (req, res) => {
+    CheckCart.find({
+      u_id:req.params.u_id,
+      // shopname:req.params.shopname,
+  })
+      .then(checkCart => {
+          if (!checkCart) {
+              return res.status(404).send({
+                  message: "Seller not found with id " + req.params.u_id
+              });
+          }
+          res.send(checkCart);
+      }).catch(err => {
+          if (err.kind === 'String') {
+              return res.status(404).send({
+                  message: "Seller not found with id " + req.params.u_id
+              });
+          }
+          return res.status(500).send({
+              message: "Error retrieving seller with id " + req.params.u_id
+          });
+      });
+}
+
      

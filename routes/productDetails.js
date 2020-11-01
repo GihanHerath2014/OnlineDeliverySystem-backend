@@ -25,7 +25,7 @@ module.exports = (app) => {
   app.get("/products/:_Id", findProduct);
 
   // Retrieve a  Products with shopId
-  app.get("/products/:shopID ", findProductShop);
+  app.get("/products/view/:shopID", findProductShop);
 
   // Update a Product with _Id
   app.put("/products/:_Id", update);
