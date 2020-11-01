@@ -58,24 +58,34 @@ exports.create = (req, res, next) => {
   };
 
   exports.removeUserCart = (req, res) => {
-    CartDetails.findByIdAndRemove(req.params.u_id)
-      .then((cartDetails) => {
-        if (!cartDetails) {
-          return res.status(404).send({
-            message: "Data not found with UserId " + req.params.u_id,
-          });
-        }
-        res.send({ message: "Data deleted successfully!" });
-      })
-      .catch((err) => {
-        if (err.kind === "ObjectId" || err.name === "NotFound") {
-          return res.status(404).send({
-            message: "Data not found with UserId " + req.params.u_id,
-          });
-        }
-        return res.status(500).send({
-          message: "Could not delete data with User Id " + req.params.u_id,
-        });
+    CartDetails.deleteMany({u_id:"5f95943516c93926648ce267"}, function(err, result) {
+      if (err) {
+        return res.status(404).send({
+                message: "Data not found with UserId " + req.params.u_id,
+              })
+      } else {
+        return res.send({ message: "Data deleted successfully!" });
+      
+      }
+
+      // .then((cartDetails) => {
+
+      //   if (!cartDetails) {
+      //     return res.status(404).send({
+      //       message: "Data not found with UserId " + req.params.u_id,
+      //     });
+      //   }
+      //   res.send({ message: "Data deleted successfully!" });
+      // })
+      // .catch((err) => {
+      //   if (err.kind === "ObjectId" || err.name === "NotFound") {
+      //     return res.status(404).send({
+      //       message: "Data not found with UserId " + req.params.u_id,
+      //     });
+      //   }
+      //   return res.status(500).send({
+      //     message: "Could not delete data with User Id " + req.params.u_id,
+      //   });
       });
   };
 

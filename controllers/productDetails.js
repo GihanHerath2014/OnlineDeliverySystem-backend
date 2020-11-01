@@ -148,6 +148,31 @@ exports.findProduct = (req, res) => {
         });
 }
 
+
+
+exports.findProductShop = (req, res) => {
+  Product.find({
+    u_id: req.params.u_id,
+  })
+    .then((product) => {
+      if (!product) {
+        return res.status(404).send({
+          message: "Cart not found with UserData " + req.params.u_id,
+        });
+      }
+      res.send(product);
+    })
+    .catch((err) => {
+      if (err.kind === "String") {
+        return res.status(404).send({
+          message: "Cart not found with UserData " + req.params.u_id,
+        });
+      }
+      return res.status(500).send({
+        message: "Error retrieving cart with userData " + req.params.u_id,
+      });
+    });
+};
 // @desc      upload photo for product
 // @route     upload
 // @access    Private

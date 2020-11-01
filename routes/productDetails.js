@@ -7,6 +7,7 @@ module.exports = (app) => {
     update,
     deleteProduct,
     findProduct,
+    findProductShop,
     getproduct,
     createProductPhotoPath
   } = require("../controllers/productDetails");
@@ -22,6 +23,9 @@ module.exports = (app) => {
 
   // Retrieve a single Product with Id
   app.get("/products/:_Id", findProduct);
+
+  // Retrieve a  Products with shopId
+  app.get("/products/:_shopId", findProductShop);
 
   // Update a Product with _Id
   app.put("/products/:_Id", update);

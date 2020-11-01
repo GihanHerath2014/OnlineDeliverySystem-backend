@@ -69,6 +69,8 @@ exports.login = (req, res, next) => {
                         full_name: user.full_name,
                         // last_name: user.last_name,
                         email: user.email,
+                        address: user.address,
+                        conatct:user.conatct,
                         user_type: user.user_type
                     }
 

@@ -12,7 +12,7 @@ module.exports = (app) => {
 
     app.get("/cart/:u_id", findUserCart);
 
-    app.delete("/cart/:u_id", removeUserCart);
+    app.delete("/cart/deletecart/:u_id", removeUserCart);
 
     app.delete("/cart/:_id", removeCartItems);
 };
