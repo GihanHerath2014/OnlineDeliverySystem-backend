@@ -24,10 +24,16 @@ const productDetailsSchema = new Schema({
             type: String,
             required: [true, 'Please add a name']
         },
-        // shopname: {
-        //     type: String,
-        //     required: [true, 'Please add a name']
-        // },
+
+        shopName: {
+            type: String,
+            required: [true, 'Please add a shop name']
+        },
+
+        shopID : {
+            type: String,
+            required: [true, 'Please add a shop id']
+        },
 
         // _Id: {
         //     type: String,
