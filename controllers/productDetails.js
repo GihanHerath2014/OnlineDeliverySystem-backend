@@ -124,29 +124,29 @@ exports.deleteProduct = (req, res) => {
     });
 };
 
-// exports.findField = (req, res) => {
-//     Product.find({
-//         category:req.params.category,
-//         // shopname:req.params.shopname,
-//     })
-//         .then(product => {
-//             if (!product) {
-//                 return res.status(404).send({
-//                     message: "Seller not found with id " + req.params.category
-//                 });
-//             }
-//             res.send(product);
-//         }).catch(err => {
-//             if (err.kind === 'String') {
-//                 return res.status(404).send({
-//                     message: "Seller not found with id " + req.params.category
-//                 });
-//             }
-//             return res.status(500).send({
-//                 message: "Error retrieving seller with id " + req.params.category
-//             });
-//         });
-// }
+exports.findProduct = (req, res) => {
+    Product.find({
+        u_id:req.params.u_id,
+        // shopname:req.params.shopname,
+    })
+        .then(product => {
+            if (!product) {
+                return res.status(404).send({
+                    message: "Seller not found with id " + req.params.category
+                });
+            }
+            res.send(product);
+        }).catch(err => {
+            if (err.kind === 'String') {
+                return res.status(404).send({
+                    message: "Seller not found with id " + req.params.category
+                });
+            }
+            return res.status(500).send({
+                message: "Error retrieving seller with id " + req.params.category
+            });
+        });
+}
 
 // @desc      upload photo for product
 // @route     upload

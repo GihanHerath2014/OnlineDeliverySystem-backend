@@ -11,12 +11,21 @@ const cartDetailsSchema = new Schema({
             type: String,
             required: [true, 'Please add productId']
         },
-           
-        // shopId: {
-        //     type: String,
-        //     required: [true, 'Please add a shopId']
-        // },
+//   
+        productName: {
+            type: String,
+            required: [true, 'Please add productId']
+        },
         
+        uniPrice: {
+            type: String,
+            required: [true, 'Please add a uniPrice']
+        },
+
+        quantity: {
+            type: String,
+            required: [true, 'Please add a quantity']
+        }
     }
 );
 module.exports = mongoose.model('cartDetails', cartDetailsSchema);
