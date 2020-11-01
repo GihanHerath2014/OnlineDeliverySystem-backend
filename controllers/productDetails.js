@@ -154,12 +154,12 @@ exports.findProduct = (req, res) => {
 
 exports.findProductShop = (req, res) => {
   Product.find({
-    u_id: req.params.u_id,
+    shopID : req.params.shopID ,
   })
     .then((product) => {
       if (!product) {
         return res.status(404).send({
-          message: "Cart not found with UserData " + req.params.u_id,
+          message: "Cart not found with UserData " + req.params.shopID ,
         });
       }
       res.send(product);
@@ -167,11 +167,11 @@ exports.findProductShop = (req, res) => {
     .catch((err) => {
       if (err.kind === "String") {
         return res.status(404).send({
-          message: "Cart not found with UserData " + req.params.u_id,
+          message: "Cart not found with UserData " + req.params.shopID ,
         });
       }
       return res.status(500).send({
-        message: "Error retrieving cart with userData " + req.params.u_id,
+        message: "Error retrieving cart with userData " + req.params.shopID ,
       });
     });
 };
