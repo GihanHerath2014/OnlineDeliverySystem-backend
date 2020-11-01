@@ -11,7 +11,9 @@ exports.create = (req, res, next) => {
     uniPrice: req.body.uniPrice,
     availableQuantity: req.body.availableQuantity,
     category: req.body.category,
-    imgName: req.body.imgName
+    imgName: req.body.imgName,
+    shopName : req.body.shopName,
+    shopID : req.body.shopID
   });
 
   // Save Product in the database
