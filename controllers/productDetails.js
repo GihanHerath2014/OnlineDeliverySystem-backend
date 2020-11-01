@@ -154,7 +154,7 @@ exports.findProduct = (req, res) => {
 
 exports.findProductShop = (req, res) => {
   Product.find({
-    shopID : req.params.shopID ,
+    shopID : req.params.shopID,
   })
     .then((product) => {
       if (!product) {
