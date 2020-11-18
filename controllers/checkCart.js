@@ -89,4 +89,33 @@ exports.findHistory=(req,res)=>{
         
     })
 }
+
+
+exports.update = (req, res, next) => {  
+    CheckCart.findByIdAndUpdate(
+      req.params._Id,
+      {
+        state: req.body.state
+      },
+      { new: true }
+    )
+      .then((product) => {
+        if (!product) {
+          return res.status(404).send({
+            message: "Product not found with id " + req.params._Id,
+          });
+        }
+        res.send(product);
+      })
+      .catch((err) => {
+        if (err.kind === "ObjectId") {
+          return res.status(404).send({
+            message: "Product not found with id " + req.params._Id,
+          });
+        }
+        return res.status(500).send({
+          message: "Error updating product with id " + req.params._Id,
+        });
+      });
+  };
      

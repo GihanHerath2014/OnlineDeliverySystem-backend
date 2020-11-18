@@ -2,7 +2,8 @@ module.exports = (app) => {
     const {
       create,
       findAll,
-      findHistory
+      findHistory,
+      update
     //   removeUserCart,
     //   removeCartItems
       
@@ -14,4 +15,6 @@ module.exports = (app) => {
     app.get("/checkout/all", findAll);
 
     app.get("/checkout/getSelected/:u_id", findHistory);
+
+    app.put("/checkout/:_Id", update);
   }
