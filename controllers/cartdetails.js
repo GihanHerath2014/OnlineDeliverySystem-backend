@@ -15,7 +15,9 @@ exports.create = (req, res, next) => {
         productId: req.body.productId,
         productName: req.body.productName,
         uniPrice: req.body.uniPrice,
-        quantity: req.body.quantity
+        quantity: req.body.quantity,
+        total:req.body.total,
+        shopID:req.body.shopID
 
     });
   

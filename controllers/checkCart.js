@@ -20,6 +20,11 @@ exports.create = (req, res, next) => {
         address: req.body.address,
         mobileNumber: req.body.mobileNumber,
         customerName: req.body.customerName,
+        email:req.body.email,
+        total:req.body.total,
+        payment:req.params.payment,
+        state:req.params.state,
+        shopID:req.body.shopID
 
     });
   

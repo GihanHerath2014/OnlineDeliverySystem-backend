@@ -25,6 +25,15 @@ const cartDetailsSchema = new Schema({
         quantity: {
             type: String,
             required: [true, 'Please add a quantity']
+        },
+        total:{
+            type:String,
+            required:[true ,'Please add total']
+        },
+
+        shopID:{
+            type:String,
+            required:[true, 'Please add shopId']
         }
     }
 );

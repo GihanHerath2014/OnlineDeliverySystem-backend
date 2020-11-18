@@ -35,7 +35,30 @@ productId: {
         customerName:{
             type: String,
             required: [true, 'Please add a name']
+        },
+
+        email: {
+            type: String,
+            required: [true, 'Please add a email'],
+        },
+        total:{
+            type:String,
+            required:[true,'Please add a total'],
+        },
+        payment:{
+            type:String,
+            required:[true, "Please add payment"],
+        },
+        state:{
+            type:String,
+            required:[true, "Please add state"],
+        },
+        shopID:{
+            type:String,
+            required:[true, 'Please add sid']
         }
+        
+
     }
 );
 module.exports = mongoose.model('checkOutList', checkOutList);
