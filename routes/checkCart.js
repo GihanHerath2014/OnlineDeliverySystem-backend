@@ -1,6 +1,7 @@
 module.exports = (app) => {
     const {
       create,
+      findAll,
       findHistory
     //   removeUserCart,
     //   removeCartItems
@@ -10,5 +11,7 @@ module.exports = (app) => {
     // Create a new Product
     app.post("/checkout/add", create);
 
-    app.get("/checkout/aa/bb/:u_id", findHistory);
-}
+    app.get("/checkout/all", findAll);
+
+    app.get("/checkout/getSelected/:u_id", findHistory);
+  }

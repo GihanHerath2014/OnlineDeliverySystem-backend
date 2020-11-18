@@ -58,7 +58,7 @@ exports.create = (req, res, next) => {
   };
 
   exports.removeUserCart = (req, res) => {
-    CartDetails.deleteMany({u_id:"5f95943516c93926648ce267"}, function(err, result) {
+    CartDetails.deleteMany({u_id:req.params.u_id}, function(err, result) {
       if (err) {
         return res.status(404).send({
                 message: "Data not found with UserId " + req.params.u_id,
