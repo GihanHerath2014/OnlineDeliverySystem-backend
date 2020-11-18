@@ -24,7 +24,7 @@ exports.create = (req, res, next) => {
         total:req.body.total,
         payment:req.body.payment,
         state:req.body.state,
-        shopID:req.body.shopId
+        // shopID:req.body.shopId
 
     });
   

@@ -52,10 +52,10 @@ const checkOutList = new Schema({
     state: {
         type: String, required: [true, "Please add state"],
     },
-    shopID: {
-        type: String,
-        required: [true, 'Please add sid']
-    }
+    // shopID: {
+    //     type: String,
+    //     required: [true, 'Please add sid']
+    // }
 
 
 }
