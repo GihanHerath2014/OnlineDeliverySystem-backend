@@ -3,13 +3,11 @@ module.exports = (app) => {
     create,
     findAll,
     findaaa,
-    uploadProductPhotoUpload,
     update,
     deleteProduct,
     findProduct,
     findProductShop,
-    getproduct,
-    createProductPhotoPath
+    updateQData
   } = require("../controllers/productDetails");
 
   // Create a new Product
@@ -22,7 +20,7 @@ module.exports = (app) => {
   app.get("/products/:category", findaaa);
 
   // Retrieve a single Product with Id
-  app.get("/products/:_Id", findProduct);
+  app.get("/productsUpdate/123/:_Id", findProduct);
 
   // Retrieve a  Products with shopId
   app.get("/products/view/:shopID", findProductShop);
@@ -32,6 +30,10 @@ module.exports = (app) => {
 
   // Delete a Product with _Id
   app.delete("/products/:_Id", deleteProduct);
+
+  // Update a Product with _Id
+  app.put("/products/qdata/:_Id", updateQData);
+
 
  // app.put("/products/list/:_id/photo", uploadProductPhotoUpload);
 

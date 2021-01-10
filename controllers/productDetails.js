@@ -127,27 +127,36 @@ exports.deleteProduct = (req, res) => {
 };
 
 exports.findProduct = (req, res) => {
-    Product.find({
-        u_id:req.params.u_id,
-        // shopname:req.params.shopname,
+    Product.findOne({
+      _Id:"5f9edfa2069a3e32e8d0bcc2"
     })
-        .then(product => {
-            if (!product) {
-                return res.status(404).send({
-                    message: "Seller not found with id " + req.params.category
-                });
-            }
-            res.send(product);
-        }).catch(err => {
-            if (err.kind === 'String') {
-                return res.status(404).send({
-                    message: "Seller not found with id " + req.params.category
-                });
-            }
-            return res.status(500).send({
-                message: "Error retrieving seller with id " + req.params.category
-            });
-        });
+    .then(product => {
+      if (product) {
+          res.json(product)
+      } else {
+          res.send("User does not exist")
+      }
+  })
+  .catch(err => {
+      res.send('error' + err)
+  })
+        // .then(product => {
+        //     if (!product) {
+        //         return res.status(404).send({
+        //             message: "Seller not found with id " + req.params.category
+        //         });
+        //     }
+        //     res.send(product);
+        // }).catch(err => {
+        //     if (err.kind === 'String') {
+        //         return res.status(404).send({
+        //             message: "Seller not found with id " + req.params.category
+        //         });
+        //     }
+        //     return res.status(500).send({
+        //         message: "Error retrieving seller with id " + req.params.category
+        //     });
+        // });
 }
 
 
@@ -175,143 +184,31 @@ exports.findProductShop = (req, res) => {
       });
     });
 };
-// @desc      upload photo for product
-// @route     upload
-// @access    Private
-/*
-exports.uploadProductPhotoUpload = asyncHandler(async (req, res, next) => {
-  const product = await Product.findById(req.params._id);
 
-  if (!product) {
-    return next(
-      new ErrorResponse(`procuct not found with id of ${req.params._id}`, 404)
-    );
-  }
-
-  if (!req.files) {
-    return next(new ErrorResponse("Please upload a file", 400));
-  }
-
-  const file = req.files.file;
-
-  // Make sure the image is a photo
-  if (!file.mimetype.startsWith("image")) {
-    return next(new ErrorResponse(`Please upload an image file`, 400));
-  }
-
-  // Check filesize
-  if (file.size > process.env.MAX_FILE_UPLOAD) {
-    return next(
-      new ErrorResponse(
-        `Please upload an image less than ${process.env.MAX_FILE_UPLOAD}`,
-        400
-      )
-    );
-  }
-  // Create custom filename
-  file.name = `photo_${product._id}${path.parse(file.name).ext}`;
-
-  file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async (err) => {
-    if (err) {
-      console.error(err);
-      return next(new ErrorResponse(`Problem with file upload`, 500));
-    }
-
-    await Product.findByIdAndUpdate(req.params.id, { photo: file.name });
-
-    res.status(200).json({
-      success: true,
-      data: file.name,
-    });
-  });
-});
-
-// @desc      Get single product
-// @route     GET /api/v1/bootcamps/:id
-// @access    Public
-exports.getproduct = asyncHandler(async (req, res, next) => {
-  const product = await Product.findById(req.params._id);
-
-  if (!product) {
-    return next(
-      new ErrorResponse(`Product not found with id of ${req.params._id}`, 401)
-    );
-  }
-  res.status(200).json({ success: true, data: product });
-});
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-exports.createProductPhotoPath = asyncHandler(async(req, res, next) => {
- // const product = await Product.findById(req.params._id);
-
-  // if (!product) {
-  //   return next(
-  //     new ErrorResponse(`procuct not found with id of ${req.params._id}`, 404)
-  //   );
-  // }
-
-  if (!req.files) {
-    return next(new ErrorResponse("Please upload a file", 400));
-  }
-
-  const file = req.files.file;
-
-  // Make sure the image is a photo
-  if (!file.mimetype.startsWith("image")) {
-    return next(new ErrorResponse(`Please upload an image file`, 400));
-  }
-
-  // Check filesize
-  if (file.size > process.env.MAX_FILE_UPLOAD) {
-    return next(
-      new ErrorResponse(
-        `Please upload an image less than ${process.env.MAX_FILE_UPLOAD}`,
-        400
-      )
-    );
-  }
-  // Create custom filename
-  file.name = `photo_${"fgd"}${path.parse(file.name).ext}`;
-  var imgPath = 'd/public/upload/'+file.name ;
-
-  file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async (err) => {
-    const productImg = new ProductImg ({
-      // _Id: req.body.id,
-      productName: req.body.productName,
-      imagePath: imgPath,
-    });
-
-    productImg
-    .save()
-    .then((data) => {
-      res.send(data);
+exports.updateQData = (req, res, next) => {  
+  Product.findByIdAndUpdate(
+    req.params._Id,
+    {
+      availableQuantity: req.body.availableQuantity,
+    },
+    { new: true }
+  )
+    .then((product) => {
+      if (!product) {
+        return res.status(404).send({
+          message: "Product not found with id " + req.params._Id,
+        });
+      }
+      res.send(product);
     })
     .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the seller.",
+      if (err.kind === "ObjectId") {
+        return res.status(404).send({
+          message: "Product not found with id " + req.params._Id,
+        });
+      }
+      return res.status(500).send({
+        message: "Error updating product with id " + req.params._Id,
       });
     });
-  
-    if (err) {
-      console.error(err);
-      return next(new ErrorResponse(`Problem with file upload`, 500));
-    }
-
-   // await Product.findByIdAndUpdate(req.params.id, { photo: file.name });
-
-    res.status(200).json({
-      success: true,
-      data: file.name,
-    });
-  });
-
-  // Create a Product
-  // Save Product in the database
-
- 
-});   */
-
+};
