@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 
-const checkOutList = new Schema({
+const deliverCart = new Schema({
     u_id: { type: String, required: [true, 'Please add a UserId'] },
     productId: {
         type: String,
@@ -63,4 +63,4 @@ const checkOutList = new Schema({
 
 }
 );
-module.exports = mongoose.model('deliveryCart', checkOutList);
+module.exports = mongoose.model('deliveryCart', deliverCart);

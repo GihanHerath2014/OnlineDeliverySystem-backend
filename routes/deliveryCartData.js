@@ -11,6 +11,6 @@ module.exports = (app) => {
 
     app.put("/deliverycart/:_Id", update);
 
-    app.delete("/products/:_Id", deleteProduct);
+   // app.delete("/deliverycart/:_Id", deleteProduct);
   
 }

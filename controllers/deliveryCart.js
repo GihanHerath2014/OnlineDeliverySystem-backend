@@ -5,11 +5,11 @@ const cors = require("cors");
 
 //Create and Save a new Deliver person
 exports.create = (req, res, next) => {
-
+  // res.json({ status: 'Registered' })
     //get today date
     const today = new Date();
 
-    const deliverPersonData = {
+    const deliverCartData = new DeliverCart({
         u_id: req.body.u_id,
         productId: req.body.productId,
         productName: req.body.productName,
@@ -26,9 +26,9 @@ exports.create = (req, res, next) => {
         deliverPersonId:'null',
         orderId:req.body.orderId,
 
-    }
+    })
 
-    DeliverCart
+    deliverCartData
     .save()
     .then((data) => {
       res.send(data);

@@ -39,6 +39,7 @@ require("./routes/electronic")(app);
 require("./routes/cartdetails")(app);
 require("./routes/checkCart")(app);
 require("./routes/deliverPerson")(app);
+require("./routes/deliveryCartData")(app);
 
 /* ----------------------------------------- image upload ---------------------------------- */
 
