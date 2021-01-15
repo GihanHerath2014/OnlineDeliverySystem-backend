@@ -51,3 +51,14 @@ exports.register = (req, res, next) => {
             res.send('error:' + err)
         })
 }
+
+exports.findAll = (req, res) => {
+    DeliverPerson.find()
+        .then(user => {
+            res.send(user);
+        }).catch(err => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving seller."
+            });
+        });
+};
