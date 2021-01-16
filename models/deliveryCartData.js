@@ -59,7 +59,11 @@ const deliverCart = new Schema({
     deliverPersonId: {
         type: String,
         required: [true, 'Please add dId']
-    }
+    },
+    orderId: {
+        type: String,
+        required: [true, 'Please add oId']
+    },
 
 }
 );

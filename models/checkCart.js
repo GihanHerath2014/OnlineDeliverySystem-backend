@@ -55,6 +55,10 @@ const checkOutList = new Schema({
     shopID: {
         type: String,
         required: [true, 'Please add sid']
+    },
+    orderId:{
+        type: String,
+        required: [true, 'Please add orderId']
     }
 
 
