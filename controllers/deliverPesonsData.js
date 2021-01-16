@@ -62,3 +62,44 @@ exports.findAll = (req, res) => {
             });
         });
 };
+
+exports.login = (req, res, next) => {
+    DeliverPerson.findOne({
+        email: req.body.email
+    })
+        .then(user => {
+            if (user) {
+                if (bcrypt.compareSync(req.body.password, user.password)) {
+                    const payload = {//you can add any thing to token (same you can get the details by the token)
+                        _id: user._id,
+                        full_name: user.full_name,
+                        // last_name: user.last_name,  
+                        conatct : user.conatct,
+                        address : user.address,
+                        postalcode : user.postalcode,
+                        email: user.email,
+                        address: user.address,
+                        conatct:user.conatct,
+                        user_type: user.user_type
+                    }
+
+                    let token = jwt.sign(payload, process.env.SECRET_KEY, {
+                        expiresIn: 1440,
+
+                    })
+                    res.json({ token: token })
+                    res.json(payload)
+                } else {
+                    res. res.status(401).json({ error: "User does not exist" })
+                    // res.status(400)
+                }
+            } else {
+                res.status(401).json({ error: "User does not exist" })
+                // res.status(400)
+            }
+        })
+        .catch(err => {
+            res.status(401).send('error:' + err)
+            // res.status(400);
+        })
+}
