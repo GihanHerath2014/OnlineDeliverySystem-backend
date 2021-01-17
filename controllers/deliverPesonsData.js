@@ -87,7 +87,7 @@ exports.login = (req, res, next) => {
                         expiresIn: 1440,
 
                     })
-                    res.json({ token: token })
+                    res.status(200).json({ token: token })
                     res.json(payload)
                 } else {
                     res. res.status(401).json({ error: "User does not exist" })

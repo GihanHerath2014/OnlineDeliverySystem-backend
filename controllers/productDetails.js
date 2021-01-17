@@ -127,8 +127,8 @@ exports.deleteProduct = (req, res) => {
 };
 
 exports.findProduct = (req, res) => {
-    Product.findOne({
-      _Id:"5f9edfa2069a3e32e8d0bcc2"
+    Product.find({
+      _id:req.params._Id,
     })
     .then(product => {
       if (product) {
@@ -140,23 +140,6 @@ exports.findProduct = (req, res) => {
   .catch(err => {
       res.send('error' + err)
   })
-        // .then(product => {
-        //     if (!product) {
-        //         return res.status(404).send({
-        //             message: "Seller not found with id " + req.params.category
-        //         });
-        //     }
-        //     res.send(product);
-        // }).catch(err => {
-        //     if (err.kind === 'String') {
-        //         return res.status(404).send({
-        //             message: "Seller not found with id " + req.params.category
-        //         });
-        //     }
-        //     return res.status(500).send({
-        //         message: "Error retrieving seller with id " + req.params.category
-        //     });
-        // });
 }
 
 

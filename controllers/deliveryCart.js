@@ -105,3 +105,18 @@ exports.findAll = (req, res) => {
       });
   };
 
+  exports.findOrderbyOrderId = (req, res) => {
+    DeliverCart.find({
+      orderId:req.params.orderId,
+    })
+    .then(product => {
+      if (product) {
+          res.json(product)
+      } else {
+          res.send("User does not exist")
+      }
+  })
+  .catch(err => {
+      res.send('error' + err)
+  })
+}

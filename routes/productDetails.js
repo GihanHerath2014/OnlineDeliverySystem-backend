@@ -20,7 +20,7 @@ module.exports = (app) => {
   app.get("/products/:category", findaaa);
 
   // Retrieve a single Product with Id
-  app.get("/productsUpdate/123/:_Id", findProduct);
+  app.get("/products/single/:_Id", findProduct);
 
   // Retrieve a  Products with shopId
   app.get("/products/view/:shopID", findProductShop);
