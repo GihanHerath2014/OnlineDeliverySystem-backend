@@ -54,22 +54,22 @@ exports.findAll = (req, res) => {
       });
   };
 
-  exports.update = (req, res, next) => {  
-    DeliverCart.findByIdAndUpdate(
-      req.params._Id,
-      {
-        deliverPersonId: req.body.deliverPersonId,
-       
-      },
-      { new: true }
-    )
+  exports.update = (req, res, next) => {
+    DeliverCart.update(
+      {"orderId": req.params.orderId}, // filter
+      { $set: { 
+          "deliverPersonId" : req.body.deliverPersonId,
+          "state":req.body.state,
+        }
+      }, // update values
+      { multi: true} )// options
       .then((product) => {
         if (!product) {
           return res.status(404).send({
             message: "Product not found with id " + req.params._Id,
           });
         }
-        res.send(product);
+        res.status(200).send(product);
       })
       .catch((err) => {
         if (err.kind === "ObjectId") {
@@ -78,10 +78,10 @@ exports.findAll = (req, res) => {
           });
         }
         return res.status(500).send({
-          message: "Error updating product with id " + req.params._Id,
+          message: "Error updating product with id " + err,
         });
       });
-  };
+    };
 
   exports.deleteProduct = (req, res) => {
     DeliverCart.findByIdAndRemove(req.params._Id)
@@ -120,3 +120,56 @@ exports.findAll = (req, res) => {
       res.send('error' + err)
   })
 }
+
+exports.findorderByD_Id = (req, res) => {
+  DeliverCart.find({
+    deliverPersonId: req.params.deliverPersonId,
+  })
+    .then((product) => {
+      if (!product) {
+        return res.status(404).send({
+          message: "deliver not found with id " + req.params.deliverPersonId,
+        });
+      }
+      res.send(product);
+    })
+    .catch((err) => {
+      if (err.kind === "String") {
+        return res.status(404).send({
+          message: "deliver not found with id " + req.params.deliverPersonId,
+        });
+      }
+      return res.status(500).send({
+        message: "deliver retrieving seller with id " + req.params.deliverPersonId,
+      });
+    });
+};
+
+
+exports.updateState = (req, res, next) => {
+  DeliverCart.update(
+    {"orderId": req.params.orderId}, // filter
+    { $set: { 
+        "state":req.body.state,
+      }
+    }, // update values
+    { multi: true} )// options
+    .then((product) => {
+      if (!product) {
+        return res.status(404).send({
+          message: "Product not found with id " + req.params._Id,
+        });
+      }
+      res.status(200).send(product);
+    })
+    .catch((err) => {
+      if (err.kind === "ObjectId") {
+        return res.status(404).send({
+          message: "Product not found with id " + req.params._Id,
+        });
+      }
+      return res.status(500).send({
+        message: "Error updating product with id " + err,
+      });
+    });
+  };

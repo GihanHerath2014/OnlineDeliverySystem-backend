@@ -4,6 +4,8 @@ module.exports = (app) => {
       findAll,
       update,
       findOrderbyOrderId,
+      findorderByD_Id,
+      updateState,
     } = require("../controllers/deliveryCart");
 
     app.post("/deliverycart/register", create);
@@ -12,7 +14,11 @@ module.exports = (app) => {
 
     app.get("/deliverycart/findOrderbyOrderId/:orderId", findOrderbyOrderId);
 
-    app.put("/deliverycart/:_Id", update);
+    app.post("/deliverycart/:orderId", update);
+
+    app.get("/deliverycart/myorders/:deliverPersonId", findorderByD_Id);
+
+    app.post("/deliverycart/updateState/:orderId", update);
 
    // app.delete("/deliverycart/:_Id", deleteProduct);
   
