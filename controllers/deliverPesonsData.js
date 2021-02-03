@@ -58,7 +58,7 @@ exports.findAll = (req, res) => {
             res.send(user);
         }).catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occurred while retrieving seller."
+                message: err.message || "Some error occurred while retrieving user."
             });
         });
 };
@@ -90,11 +90,13 @@ exports.login = (req, res, next) => {
                     res.status(200).json({ token: token })
                     res.json(payload)
                 } else {
-                    res. res.status(401).json({ error: "User does not exist" })
+                    res. res.status(401).json({ error: "User does not exist"  })
+                    res.json( user.email)
                     // res.status(400)
                 }
             } else {
                 res.status(401).json({ error: "User does not exist" })
+                res.json( user.email)
                 // res.status(400)
             }
         })
@@ -103,3 +105,28 @@ exports.login = (req, res, next) => {
             // res.status(400);
         })
 }
+
+
+// Find a single seller with a _Id
+exports.findOne = (req, res) => {
+    DeliverPerson.findOne({
+        email: req.params.email
+    })
+        .then(user => {
+            if (!user) {
+                return res.status(404).send({
+                    message: "user not found with id " + req.params.email
+                });
+            }
+            res.status(200).send(user);
+        }).catch(err => {
+            if (err.kind === 'ObjectId') {
+                return res.status(404).send({
+                    message: "user not found with id " + req.params.email
+                });
+            }
+            return res.status(500).send({
+                message: "Error retrieving user with id " + req.params.email
+            });
+        });
+};

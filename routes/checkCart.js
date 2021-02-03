@@ -3,7 +3,9 @@ module.exports = (app) => {
       create,
       findAll,
       findHistory,
-      update
+      update,
+      findOrderbyOrderId,
+      updateState
     //   removeUserCart,
     //   removeCartItems
       
@@ -17,4 +19,10 @@ module.exports = (app) => {
     app.get("/checkout/getSelected/:u_id", findHistory);
 
     app.put("/checkout/:_Id", update);
+
+    //app.get("/deliverycart/list", findAll);
+
+    app.get("/checkout/findOrderbyOrderId/:orderId", findOrderbyOrderId);
+
+    app.post("/checkout/:orderId", updateState);
   }

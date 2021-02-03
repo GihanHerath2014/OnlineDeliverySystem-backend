@@ -119,4 +119,50 @@ exports.update = (req, res, next) => {
         });
       });
   };
+
+  exports.findOrderbyOrderId = (req, res) => {
+    CheckCart.find({
+      orderId:req.params.orderId,
+    })
+    .then(product => {
+      if (product) {
+          res.json(product)
+      } else {
+          res.send("User does not exist")
+      }
+  })
+  .catch(err => {
+      res.send('error' + err)
+  })
+}
      
+
+
+exports.updateState = (req, res, next) => {
+  CheckCart.update(
+    {"orderId": req.params.orderId}, // filter
+    { $set: { 
+        "deliverPersonId" : req.body.deliverPersonId,
+        "state":req.body.state,
+      }
+    }, // update values
+    { multi: true} )// options
+    .then((product) => {
+      if (!product) {
+        return res.status(404).send({
+          message: "Product not found with id " + req.params._Id,
+        });
+      }
+      res.status(200).send(product);
+    })
+    .catch((err) => {
+      if (err.kind === "ObjectId") {
+        return res.status(404).send({
+          message: "Product not found with id " + req.params._Id,
+        });
+      }
+      return res.status(500).send({
+        message: "Error updating product with id " + err,
+      });
+    });
+  };
