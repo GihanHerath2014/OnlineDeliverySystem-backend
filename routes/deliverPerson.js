@@ -3,7 +3,8 @@ module.exports = (app) => {
         register,
         findAll,
         login,
-        findOne
+        findOne,
+        update
     } = require("../controllers/deliverPesonsData");
   
     // Create a new Product
@@ -14,5 +15,7 @@ module.exports = (app) => {
     app.post('/delivers/login', login);
 
     app.get('/delivers/:email', findOne);
+
+    app.post("/delivers/update/:_Id", update);
 
 }

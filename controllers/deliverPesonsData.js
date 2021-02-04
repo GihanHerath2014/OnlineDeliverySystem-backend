@@ -130,3 +130,41 @@ exports.findOne = (req, res) => {
             });
         });
 };
+
+exports.update = (req, res, next) => {  
+    DeliverPerson.findByIdAndUpdate(
+      req.params._Id,
+      {
+        full_name: req.body.full_name,
+        //email:req.body.email,
+        conatct: req.body.conatct,
+        address: req.body.address,
+        drivingLicenceId: req.body.drivingLicenceId,
+        vehicaleType:req.body.vehicaleType,
+        vehicaleLicenceNumber: req.body.vehicaleLicenceNumber,
+        //password: req.body.password,
+        user_type: req.body.user_type
+        // add new image 
+       // imgPath: req.body.imgPath,
+      },
+      { new: true }
+    )
+      .then((product) => {
+        if (!product) {
+          return res.status(404).send({
+            message: "Product not found with id " + req.params._Id,
+          });
+        }
+        res.send(product);
+      })
+      .catch((err) => {
+        if (err.kind === "ObjectId") {
+          return res.status(404).send({
+            message: "Product not found with id " + req.params._Id,
+          });
+        }
+        return res.status(500).send({
+          message: "Error updating product with id " + req.params._Id,
+        });
+      });
+  };
