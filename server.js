@@ -41,6 +41,7 @@ require("./routes/checkCart")(app);
 require("./routes/deliverPerson")(app);
 require("./routes/deliveryCartData")(app);
 require("./routes/incomeOfDelivers")(app);
+require("./routes/category")(app);
 
 /* ----------------------------------------- image upload ---------------------------------- */
 
