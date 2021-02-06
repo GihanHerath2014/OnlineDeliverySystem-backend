@@ -79,7 +79,7 @@ exports.update = (req, res, next) => {
       availableQuantity: req.body.availableQuantity,
       category: req.body.category,
       // add new image 
-     // imgPath: req.body.imgPath,
+     imgPath: req.body.imgPath,
     },
     { new: true }
   )
@@ -89,7 +89,9 @@ exports.update = (req, res, next) => {
           message: "Product not found with id " + req.params._Id,
         });
       }
-      res.send(product);
+      res.status(200).send({
+        statusCode: 200,
+        message:product});
     })
     .catch((err) => {
       if (err.kind === "ObjectId") {

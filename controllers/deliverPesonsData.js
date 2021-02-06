@@ -90,18 +90,18 @@ exports.login = (req, res, next) => {
                     res.status(200).json({ token: token })
                     res.json(payload)
                 } else {
-                    res. res.status(401).json({ error: "User does not exist"  })
+                    res. res.status(401).json({ message: "User does not exist..."  })
                     res.json( user.email)
                     // res.status(400)
                 }
             } else {
-                res.status(401).json({ error: "User does not exist" })
+                res.status(401).json("please check your email...")
                 res.json( user.email)
                 // res.status(400)
             }
         })
         .catch(err => {
-            res.status(401).send('error:' + err)
+            res.status(401).json("please check your password...")
             // res.status(400);
         })
 }
