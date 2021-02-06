@@ -79,7 +79,7 @@ exports.update = (req, res, next) => {
       availableQuantity: req.body.availableQuantity,
       category: req.body.category,
       // add new image 
-     imgPath: req.body.imgPath,
+      imgName: req.body.imgName,
     },
     { new: true }
   )
