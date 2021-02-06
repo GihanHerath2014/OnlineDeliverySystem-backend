@@ -13,10 +13,10 @@ exports.create = (req, res, next) => {
   category
     .save()
     .then((data) => {
-      res.send(data);
+      res.status(200).send(data);
     })
     .catch((err) => {
-      res.status(500).send({
+      res.status(401).send({
         message:
           err.message || "Some error occurred while creating the category.",
       });
@@ -26,10 +26,10 @@ exports.create = (req, res, next) => {
 exports.findAll = (req, res) => {
     Category.find()
       .then((category) => {
-        res.send(category);
+        res.status(200).send(category);
       })
       .catch((err) => {
-        res.status(500).send({
+        res.status(401).send({
           message: err.message || "Some error occurred while retrieving category.",
         });
       });
@@ -61,13 +61,13 @@ exports.findAll = (req, res) => {
 
       .then(product => {
         if (product) {
-            res.json(product)
+            res.status(200).json(product)
         } else {
-            res.send("User does not exist")
+            res.status(401).send("User does not exist")
         }
     })
     .catch(err => {
-        res.send('error' + err)
+        res.status(401).send('error' + err)
     })
   };
 
@@ -75,19 +75,19 @@ exports.findAll = (req, res) => {
     Category.findByIdAndRemove(req.params._Id)
       .then((category) => {
         if (!category) {
-          return res.status(404).send({
+          return res.status(401).send({
             message: "category not found with id " + req.params._Id,
           });
         }
-        res.send({ message: "category deleted successfully!" });
+        res.status(200).send({ message: "category deleted successfully!" });
       })
       .catch((err) => {
         if (err.kind === "ObjectId" || err.name === "NotFound") {
-          return res.status(404).send({
+          return res.status(401).send({
             message: "category not found with id " + req.params._Id,
           });
         }
-        return res.status(500).send({
+        return res.status(401).send({
           message: "Could not delete category with id " + req.params._Id,
         });
       });

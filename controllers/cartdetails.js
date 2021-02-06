@@ -25,10 +25,10 @@ exports.create = (req, res, next) => {
     cartDetails
       .save()
       .then((data) => {
-        res.send(data);
+        res.status(200).send(data);
       })
       .catch((err) => {
-        res.status(500).send({
+        res.status(401).send({
           message:
             err.message || "Some error occurred while creating the seller.",
         });
@@ -41,19 +41,19 @@ exports.create = (req, res, next) => {
     })
       .then((cartDetails) => {
         if (!cartDetails) {
-          return res.status(404).send({
+          return res.status(401).send({
             message: "Cart not found with UserData " + req.params.u_id,
           });
         }
-        res.send(cartDetails);
+        res.status(200).send(cartDetails);
       })
       .catch((err) => {
         if (err.kind === "String") {
-          return res.status(404).send({
+          return res.status(401).send({
             message: "Cart not found with UserData " + req.params.u_id,
           });
         }
-        return res.status(500).send({
+        return res.status(401).send({
           message: "Error retrieving cart with userData " + req.params.u_id,
         });
       });
@@ -62,11 +62,11 @@ exports.create = (req, res, next) => {
   exports.removeUserCart = (req, res) => {
     CartDetails.deleteMany({u_id:req.params.u_id}, function(err, result) {
       if (err) {
-        return res.status(404).send({
+        return res.status(401).send({
                 message: "Data not found with UserId " + req.params.u_id,
               })
       } else {
-        return res.send({ message: "Data deleted successfully!" });
+        return res.status(200).send({ message: "Data deleted successfully!" });
       
       }
 
@@ -95,19 +95,19 @@ exports.create = (req, res, next) => {
     CartDetails.findByIdAndRemove(req.params._id)
       .then((cartDetails) => {
         if (!cartDetails) {
-          return res.status(404).send({
+          return res.status(401).send({
             message: "Data not found with Id " + req.params._id,
           });
         }
-        res.send({ message: "Data deleted successfully!" });
+        res.status(200).send({ message: "Data deleted successfully!" });
       })
       .catch((err) => {
         if (err.kind === "ObjectId" || err.name === "NotFound") {
-          return res.status(404).send({
+          return res.status(401).send({
             message: "Data not found with Id " + req.params._id,
           });
         }
-        return res.status(500).send({
+        return res.status(401).send({
           message: "Could not delete data with  Id " + req.params._id,
         });
       });

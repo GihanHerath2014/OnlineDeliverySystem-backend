@@ -36,26 +36,26 @@ exports.register = (req, res, next) => {
                     deliverPersonData.password = hash  //password create hash marks
                     DeliverPerson.create(deliverPersonData)
                         .then(user => {
-                            res.send(user);
+                            res.status(200).send(user);
                             res.json({ status: user.email + 'Registered' })
                         })
                         .catch(err => {
-                            res.send( err)
+                            res.status(401).send( err)
                         })
                 })
             } else {
-                res.json({ error: "User already exists" })
+                res.status(401).json({ error: "User already exists" })
             }
         })
         .catch(err => {
-            res.send('error:' + err)
+            res.status(401).send('error:' + err)
         })
 }
 
 exports.findAll = (req, res) => {
     DeliverPerson.find()
         .then(user => {
-            res.send(user);
+            res.status(200).send(user);
         }).catch(err => {
             res.status(500).send({
                 message: err.message || "Some error occurred while retrieving user."
@@ -90,7 +90,7 @@ exports.login = (req, res, next) => {
                     res.status(200).json({ token: token })
                     res.json(payload)
                 } else {
-                    res. res.status(401).json({ message: "User does not exist..."  })
+                    res.status(401).json({ message: "User does not exist..."  })
                     res.json( user.email)
                     // res.status(400)
                 }
@@ -151,19 +151,19 @@ exports.update = (req, res, next) => {
     )
       .then((product) => {
         if (!product) {
-          return res.status(404).send({
-            message: "Product not found with id " + req.params._Id,
+          return res.status(401).send({
+            message: "User details update" + req.params._Id,
           });
         }
-        res.send(product);
+        res.status(200).send(product);
       })
       .catch((err) => {
         if (err.kind === "ObjectId") {
-          return res.status(404).send({
+          return res.status(401).send({
             message: "Product not found with id " + req.params._Id,
           });
         }
-        return res.status(500).send({
+        return res.status(401).send({
           message: "Error updating product with id " + req.params._Id,
         });
       });

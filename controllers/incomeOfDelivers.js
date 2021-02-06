@@ -18,10 +18,10 @@ exports.create = (req, res, next) => {
   income
     .save()
     .then((data) => {
-      res.send(data);
+      res.status(200).send(data);
     })
     .catch((err) => {
-      res.status(500).send({
+      res.status(401).send({
         message:
           err.message || "Some error occurred while creating the seller.",
       });
@@ -33,13 +33,13 @@ exports.findu_id = (req, res) => {
     })
     .then(product => {
       if (product) {
-          res.json(product)
+          res.status(200).json(product)
       } else {
-          res.send("User does not exist")
+          res.status(401).send("User does not exist")
       }
   })
   .catch(err => {
-      res.send('error' + err)
+      res.status(401).send('error' + err)
   })
 }
 
@@ -50,18 +50,18 @@ exports.findOne = (req, res) => {
     })
         .then(user => {
             if (!user) {
-                return res.status(404).send({
+                return res.status(401).send({
                     message: "user not found with id " + req.params.u_id
                 });
             }
             res.status(200).send(user);
         }).catch(err => {
             if (err.kind === 'ObjectId') {
-                return res.status(404).send({
+                return res.status(401).send({
                     message: "user not found with id " + req.params.u_id
                 });
             }
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "Error retrieving user with id " + req.params.u_id
             });
         });
@@ -70,11 +70,33 @@ exports.findOne = (req, res) => {
 exports.findAll = (req, res) => {
     Income.find()
       .then((seller) => {
-        res.send(seller);
+        res.status(200).send(seller);
       })
       .catch((err) => {
-        res.status(500).send({
+        res.status(401).send({
           message: err.message || "Some error occurred while retrieving seller.",
+        });
+      });
+  };
+
+  exports.deleteProduct = (req, res) => {
+    Income.findByIdAndRemove(req.params._Id)
+      .then((product) => {
+        if (!product) {
+          return res.status(401).send({
+            message: "Product not found with id " + req.params._Id,
+          });
+        }
+        res.status(200).send({ message: "Product deleted successfully!" });
+      })
+      .catch((err) => {
+        if (err.kind === "ObjectId" || err.name === "NotFound") {
+          return res.status(401).send({
+            message: "Product not found with id " + req.params._Id,
+          });
+        }
+        return res.status(401).send({
+          message: "Could not delete product with id " + req.params._Id,
         });
       });
   };

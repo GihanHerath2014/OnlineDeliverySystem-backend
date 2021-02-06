@@ -40,20 +40,20 @@ exports.create1 = (req, res, next) => {
                     sellerData.password = hash  //password create hash marks
                     Seller.create(sellerData)
                         .then(user => {
-                            res.send(user);
-                            res.json({ status: user.email + 'Registered' })
+                            res.status(200).send(user);
+                            res.status(200).json({ status: user.email + 'Registered' })
                         })
                         .catch(err => {
-                            res.send('error:' + err)
+                            res.status(401).send('error:' + err)
                         })
                 })
             } else {
-                res.json({ error: "User already exists" })
+                res.status(401).json({ error: "User already exists" })
                 
             }
         })
         .catch(err => {
-            res.send('error:' + err)
+            res.status(401).send('error:' + err)
         })
 }
 
@@ -84,17 +84,17 @@ exports.login = (req, res, next) => {
                         expiresIn: 1440,
 
                     })
-                    res.json({ token: token })
-                    res.json(payload)
+                    res.status(200).json({ token: token })
+                    res.status(200).json(payload)
                 } else {
-                    res.json({ error: "User does not exist" })
+                    res.status(401).json({ error: "User does not exist" })
                 }
             } else {
-                res.json({ error: "User does not exist" })
+                res.status(401).json({ error: "User does not exist" })
             }
         })
         .catch(err => {
-            res.send('error:' + err)
+            res.status(401).send('error:' + err)
         })
 }
 
@@ -149,9 +149,9 @@ exports.create = (req, res, next) => {
     // Save Seller in the database
     seller.save()
         .then(data => {
-            res.send(data);
+            res.status(200).send(data);
         }).catch(err => {
-            res.status(500).send({
+            res.status(401).send({
                 message: err.message || "Some error occurred while creating the seller."
             });
         });
@@ -161,9 +161,9 @@ exports.create = (req, res, next) => {
 exports.findAll = (req, res) => {
     Seller.find()
         .then(seller => {
-            res.send(seller);
+            res.status(200).send(seller);
         }).catch(err => {
-            res.status(500).send({
+            res.status(401).send({
                 message: err.message || "Some error occurred while retrieving seller."
             });
         });
@@ -175,18 +175,18 @@ exports.findOne = (req, res) => {
     Seller.findById(req.params._Id)
         .then(seller => {
             if (!seller) {
-                return res.status(404).send({
+                return res.status(401).send({
                     message: "Seller not found with id " + req.params._Id
                 });
             }
             res.status(200).send(seller);
         }).catch(err => {
             if (err.kind === 'ObjectId') {
-                return res.status(404).send({
+                return res.status(401).send({
                     message: "Seller not found with id " + req.params._Id
                 });
             }
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "Error retrieving seller with id " + req.params._Id
             });
         });
@@ -216,18 +216,18 @@ exports.update = (req, res, next) => {
     }, { new: true })
         .then(seller => {
             if (!seller) {
-                return res.status(404).send({
+                return res.status(401).send({
                     message: "Seller not found with id " + req.params._Id
                 });
             }
-            res.send(seller);
+            res.status(200).send(seller);
         }).catch(err => {
             if (err.kind === 'ObjectId') {
-                return res.status(404).send({
+                return res.status(401).send({
                     message: "Seller not found with id " + req.params._Id
                 });
             }
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "Error updating seller with id " + req.params._Id
             });
         });
@@ -238,18 +238,18 @@ exports.delete = (req, res) => {
     Seller.findByIdAndRemove(req.params._Id)
         .then(seller => {
             if (!seller) {
-                return res.status(404).send({
+                return res.status(401).send({
                     message: "Seller not found with id " + req.params._Id
                 });
             }
-            res.send({ message: "Seller deleted successfully!" });
+            res.status(200).send({ message: "Seller deleted successfully!" });
         }).catch(err => {
             if (err.kind === 'ObjectId' || err.name === 'NotFound') {
-                return res.status(404).send({
+                return res.status(401).send({
                     message: "Seller not found with id " + req.params._Id
                 });
             }
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "Could not delete seller with id " + req.params._Id
             });
         });
@@ -270,18 +270,18 @@ exports.updateStatues = (req, res, next) => {
     }, { new: true })
         .then(seller => {
             if (!seller) {
-                return res.status(404).send({
+                return res.status(401).send({
                     message: "Seller not found with id " + req.params._Id
                 });
             }
-            res.send(seller);
+            res.status(200).send(seller);
         }).catch(err => {
             if (err.kind === 'ObjectId') {
-                return res.status(404).send({
+                return res.status(401).send({
                     message: "Seller not found with id " + req.params._Id
                 });
             }
-            return res.status(500).send({
+            return res.status(401).send({
                 message: "Error updating seller with id " + req.params._Id
             });
         });

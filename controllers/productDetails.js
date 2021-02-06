@@ -85,7 +85,7 @@ exports.update = (req, res, next) => {
   )
     .then((product) => {
       if (!product) {
-        return res.status(404).send({
+        return res.status(401).send({
           message: "Product not found with id " + req.params._Id,
         });
       }
@@ -95,11 +95,11 @@ exports.update = (req, res, next) => {
     })
     .catch((err) => {
       if (err.kind === "ObjectId") {
-        return res.status(404).send({
+        return res.status(401).send({
           message: "Product not found with id " + req.params._Id,
         });
       }
-      return res.status(500).send({
+      return res.status(401).send({
         message: "Error updating product with id " + req.params._Id,
       });
     });
@@ -110,19 +110,19 @@ exports.deleteProduct = (req, res) => {
   Product.findByIdAndRemove(req.params._Id)
     .then((product) => {
       if (!product) {
-        return res.status(404).send({
+        return res.status(401).send({
           message: "Product not found with id " + req.params._Id,
         });
       }
-      res.send({ message: "Product deleted successfully!" });
+      res.status(200).send({ message: "Product deleted successfully!" });
     })
     .catch((err) => {
       if (err.kind === "ObjectId" || err.name === "NotFound") {
-        return res.status(404).send({
+        return res.status(401).send({
           message: "Product not found with id " + req.params._Id,
         });
       }
-      return res.status(500).send({
+      return res.status(401).send({
         message: "Could not delete product with id " + req.params._Id,
       });
     });
@@ -134,13 +134,13 @@ exports.findProduct = (req, res) => {
     })
     .then(product => {
       if (product) {
-          res.json(product)
+          res.status(200).json(product)
       } else {
-          res.send("User does not exist")
+          res.status(401).send("User does not exist")
       }
   })
   .catch(err => {
-      res.send('error' + err)
+      res.status(401).send('error' + err)
   })
 }
 

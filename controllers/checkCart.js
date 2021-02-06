@@ -33,10 +33,10 @@ exports.create = (req, res, next) => {
     checkCart
       .save()
       .then((data) => {
-        res.send(data);
+        res.status(200).send(data);
       })
       .catch((err) => {
-        res.status(500).send({
+        res.status(401).send({
           message:
             err.message || "Some error occurred while creating the seller.",
         });
@@ -48,9 +48,9 @@ exports.create = (req, res, next) => {
 exports.findAll = (req, res) => {
     CheckCart.find()
         .then(user => {
-            res.send(user);
+            res.status(200).send(user);
         }).catch(err => {
-            res.status(500).send({
+            res.status(401).send({
                 message: err.message || "Some error occurred while retrieving seller."
             });
         });
@@ -79,12 +79,12 @@ exports.findHistory=(req,res)=>{
     CheckCart.find({u_id:req.params.u_id})
     .then(checkCart =>{
         if(!checkCart){
-            return res.status(404).send({
+            return res.status(401).send({
                 message:"User not found with id" +req.params.u_id
             })
         }
 
-        res.send(checkCart);
+        res.status(200).send(checkCart);
     })
     .catch(err=>{
         
@@ -102,19 +102,19 @@ exports.update = (req, res, next) => {
     )
       .then((product) => {
         if (!product) {
-          return res.status(404).send({
+          return res.status(401).send({
             message: "Product not found with id " + req.params._Id,
           });
         }
-        res.send(product);
+        res.status(200).send(product);
       })
       .catch((err) => {
         if (err.kind === "ObjectId") {
-          return res.status(404).send({
+          return res.status(401).send({
             message: "Product not found with id " + req.params._Id,
           });
         }
-        return res.status(500).send({
+        return res.status(401).send({
           message: "Error updating product with id " + req.params._Id,
         });
       });
@@ -126,13 +126,13 @@ exports.update = (req, res, next) => {
     })
     .then(product => {
       if (product) {
-          res.json(product)
+          res.status(200).json(product)
       } else {
-          res.send("User does not exist")
+          res.status(401).send("User does not exist")
       }
   })
   .catch(err => {
-      res.send('error' + err)
+      res.status(401).send('error' + err)
   })
 }
      
@@ -149,7 +149,7 @@ exports.updateState = (req, res, next) => {
     { multi: true} )// options
     .then((product) => {
       if (!product) {
-        return res.status(404).send({
+        return res.status(401).send({
           message: "Product not found with id " + req.params._Id,
         });
       }
@@ -157,11 +157,11 @@ exports.updateState = (req, res, next) => {
     })
     .catch((err) => {
       if (err.kind === "ObjectId") {
-        return res.status(404).send({
+        return res.status(401).send({
           message: "Product not found with id " + req.params._Id,
         });
       }
-      return res.status(500).send({
+      return res.status(401).send({
         message: "Error updating product with id " + err,
       });
     });

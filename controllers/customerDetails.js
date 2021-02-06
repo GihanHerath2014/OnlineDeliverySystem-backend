@@ -81,17 +81,17 @@ exports.login = (req, res, next) => {
                         expiresIn: 1440,
 
                     })
-                    res.json({ token: token })
-                    res.json(payload)
+                    res.status(200).json({ token: token })
+                    res.status(200).json(payload)
                 } else {
-                    res.json({ error: "User does not exist" })
+                    res.status(401).json({ error: "User does not exist" })
                 }
             } else {
-                res.json({ error: "User does not exist" })
+                res.status(401).json({ error: "User does not exist" })
             }
         })
         .catch(err => {
-            res.send('error:' + err)
+            res.status(401).send('error:' + err)
         })
 }
 
@@ -105,13 +105,13 @@ exports.profile = (req, res, next) => {
     })
         .then(user => {
             if (user) {
-                res.json(user)
+                res.status(200).json(user)
             } else {
-                res.send("User does not exist")
+                res.status(401).send("User does not exist")
             }
         })
         .catch(err => {
-            res.send('error' + err)
+            res.status(401).send('error' + err)
         })
 }
 
@@ -121,13 +121,13 @@ exports.getDetails = (req, res, next) => {
     Customer.find({})
         .then(user => {
             if (user) {
-                res.json(user)
+                res.status(200).json(user)
             } else {
-                res.send("User does not exist")
+                res.status(401).send("User does not exist")
             }
         })
         .catch(err => {
-            res.send('error' + err)
+            res.status(401).send('error' + err)
         })
 }
 
@@ -136,9 +136,9 @@ exports.getDetails = (req, res, next) => {
 exports.findAll = (req, res) => {
     Customer.find()
         .then(user => {
-            res.send(user);
+            res.status(200).send(user);
         }).catch(err => {
-            res.status(500).send({
+            res.status(401).send({
                 message: err.message || "Some error occurred while retrieving seller."
             });
         });

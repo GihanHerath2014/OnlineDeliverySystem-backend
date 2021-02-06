@@ -31,10 +31,10 @@ exports.create = (req, res, next) => {
     deliverCartData
     .save()
     .then((data) => {
-      res.send(data);
+      res.status(200).send(data);
     })
     .catch((err) => {
-      res.status(500).send({
+      res.status(401).send({
         message:
           err.message || "Some error occurred while creating the seller.",
       });
@@ -45,10 +45,10 @@ exports.create = (req, res, next) => {
 exports.findAll = (req, res) => {
     DeliverCart.find()
       .then((seller) => {
-        res.send(seller);
+        res.status(200).send(seller);
       })
       .catch((err) => {
-        res.status(500).send({
+        res.status(401).send({
           message: err.message || "Some error occurred while retrieving seller.",
         });
       });
@@ -65,7 +65,7 @@ exports.findAll = (req, res) => {
       { multi: true} )// options
       .then((product) => {
         if (!product) {
-          return res.status(404).send({
+          return res.status(401).send({
             message: "Product not found with id " + req.params._Id,
           });
         }
@@ -73,11 +73,11 @@ exports.findAll = (req, res) => {
       })
       .catch((err) => {
         if (err.kind === "ObjectId") {
-          return res.status(404).send({
+          return res.status(401).send({
             message: "Product not found with id " + req.params._Id,
           });
         }
-        return res.status(500).send({
+        return res.status(401).send({
           message: "Error updating product with id " + err,
         });
       });
@@ -87,19 +87,19 @@ exports.findAll = (req, res) => {
     DeliverCart.findByIdAndRemove(req.params._Id)
       .then((product) => {
         if (!product) {
-          return res.status(404).send({
+          return res.status(401).send({
             message: "Product not found with id " + req.params._Id,
           });
         }
-        res.send({ message: "Product deleted successfully!" });
+        res.status(200).send({ message: "Product deleted successfully!" });
       })
       .catch((err) => {
         if (err.kind === "ObjectId" || err.name === "NotFound") {
-          return res.status(404).send({
+          return res.status(401).send({
             message: "Product not found with id " + req.params._Id,
           });
         }
-        return res.status(500).send({
+        return res.status(401).send({
           message: "Could not delete product with id " + req.params._Id,
         });
       });
@@ -111,13 +111,13 @@ exports.findAll = (req, res) => {
     })
     .then(product => {
       if (product) {
-          res.json(product)
+          res.status(401).json(product)
       } else {
-          res.send("User does not exist")
+          res.status(200).send("User does not exist")
       }
   })
   .catch(err => {
-      res.send('error' + err)
+      res.status(401).send('error' + err)
   })
 }
 
@@ -127,19 +127,19 @@ exports.findorderByD_Id = (req, res) => {
   })
     .then((product) => {
       if (!product) {
-        return res.status(404).send({
+        return res.status(401).send({
           message: "deliver not found with id " + req.params.deliverPersonId,
         });
       }
-      res.send(product);
+      res.status(200).send(product);
     })
     .catch((err) => {
       if (err.kind === "String") {
-        return res.status(404).send({
+        return res.status(401).send({
           message: "deliver not found with id " + req.params.deliverPersonId,
         });
       }
-      return res.status(500).send({
+      return res.status(401).send({
         message: "deliver retrieving seller with id " + req.params.deliverPersonId,
       });
     });
@@ -156,7 +156,7 @@ exports.updateState = (req, res, next) => {
     { multi: true} )// options
     .then((product) => {
       if (!product) {
-        return res.status(404).send({
+        return res.status(401).send({
           message: "Product not found with id " + req.params._Id,
         });
       }
@@ -164,11 +164,11 @@ exports.updateState = (req, res, next) => {
     })
     .catch((err) => {
       if (err.kind === "ObjectId") {
-        return res.status(404).send({
+        return res.status(401).send({
           message: "Product not found with id " + req.params._Id,
         });
       }
-      return res.status(500).send({
+      return res.status(401).send({
         message: "Error updating product with id " + err,
       });
     });
