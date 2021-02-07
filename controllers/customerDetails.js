@@ -39,19 +39,19 @@ exports.register = (req, res, next) => {
                     customerData.password = hash  //password create hash marks
                     Customer.create(customerData)
                         .then(user => {
-                            res.send(user);
+                            res.status(200).send(user);
                             res.json({ status: user.email + 'Registered' })
                         })
                         .catch(err => {
-                            res.send( err)
+                            res.status(401).send( err)
                         })
                 })
             } else {
-                res.json({ error: "User already exists" })
+                res.status(401).json({ error: "User already exists" })
             }
         })
         .catch(err => {
-            res.send('error:' + err)
+            res.status(401).send('error:' + err)
         })
 }
 

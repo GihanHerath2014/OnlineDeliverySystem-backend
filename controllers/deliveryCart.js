@@ -111,9 +111,9 @@ exports.findAll = (req, res) => {
     })
     .then(product => {
       if (product) {
-          res.status(401).json(product)
+          res.status(200).json(product)
       } else {
-          res.status(200).send("User does not exist")
+          res.status(401).send("User does not exist")
       }
   })
   .catch(err => {

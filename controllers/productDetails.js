@@ -20,7 +20,7 @@ exports.create = (req, res, next) => {
   product
     .save()
     .then((data) => {
-      res.send(data);
+      res.status(200).send(data);
     })
     .catch((err) => {
       res.status(500).send({
@@ -35,7 +35,7 @@ exports.create = (req, res, next) => {
 exports.findAll = (req, res) => {
   Product.find()
     .then((seller) => {
-      res.send(seller);
+      res.status(200).send(seller);
     })
     .catch((err) => {
       res.status(500).send({
@@ -55,7 +55,7 @@ exports.findaaa = (req, res) => {
           message: "Seller not found with id " + req.params.category,
         });
       }
-      res.send(product);
+      res.status(200).send(product);
     })
     .catch((err) => {
       if (err.kind === "String") {
@@ -156,7 +156,7 @@ exports.findProductShop = (req, res) => {
           message: "Cart not found with UserData " + req.params.shopID ,
         });
       }
-      res.send(product);
+      res.status(200).send(product);
     })
     .catch((err) => {
       if (err.kind === "String") {
@@ -184,7 +184,7 @@ exports.updateQData = (req, res, next) => {
           message: "Product not found with id " + req.params._Id,
         });
       }
-      res.send(product);
+      res.status(200).send(product);
     })
     .catch((err) => {
       if (err.kind === "ObjectId") {
