@@ -87,14 +87,14 @@ exports.login = (req, res, next) => {
                     res.status(200).json({ token: token })
                     res.status(200).json(payload)
                 } else {
-                    res.status(401).json({ error: "User does not exist" })
+                    res.status(401).json({ error: "Password is invalid please try again"  })
                 }
             } else {
                 res.status(401).json({ error: "User does not exist" })
             }
         })
         .catch(err => {
-            res.status(401).send('error:' + err)
+            res.status(401).send({error: "User does not register please click singup...."})
         })
 }
 

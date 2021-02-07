@@ -18,7 +18,7 @@ const deliverPersonSchema = new Schema({
     },
     conatct: {
         type: String,
-        required: [true, 'Please add a last_name']
+        required: [true, 'Please add a conatct']
     },
     address: {
         type: String,
@@ -30,7 +30,7 @@ const deliverPersonSchema = new Schema({
     },
     vehicaleType: {
         type: String,
-        required: [true, 'Please add an vehicale_type']
+        required: [false, 'Please add an vehicale_type']
     },
 
     vehicaleLicenceNumber: {
