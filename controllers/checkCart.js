@@ -25,8 +25,8 @@ exports.create = (req, res, next) => {
         payment:req.body.payment,
         state:req.body.state,
         shopID:req.body.shopId,
-        orderId:req.body.orderId
-
+        orderId:req.body.orderId,
+        date:req.body.date
     });
   
     // Save Product in the database
@@ -96,7 +96,8 @@ exports.update = (req, res, next) => {
     CheckCart.findByIdAndUpdate(
       req.params._Id,
       {
-        state: req.body.state
+        state: req.body.state,
+        date:req.body.date
       },
       { new: true }
     )

@@ -47,10 +47,12 @@ const checkOutList = new Schema({
         required: [true, 'Please add a total'],
     },
     payment: {
-        type: String, required: [true, "Please add payment"],
+        type: String, 
+        required: [true, "Please add payment"],
     },
     state: {
-        type: String, required: [true, "Please add state"],
+        type: String, 
+        required: [true, "Please add state"],
     },
     shopID: {
         type: String,
@@ -59,9 +61,11 @@ const checkOutList = new Schema({
     orderId:{
         type: String,
         required: [true, 'Please add orderId']
+    },
+    date:{
+        type: Date,
+        default: Date.now
     }
-
-
 }
 );
 module.exports = mongoose.model('checkOutList', checkOutList);
