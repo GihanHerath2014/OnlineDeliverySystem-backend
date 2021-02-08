@@ -96,8 +96,7 @@ exports.update = (req, res, next) => {
     CheckCart.findByIdAndUpdate(
       req.params._Id,
       {
-        state: req.body.state,
-        date:req.body.date
+        state: req.body.state
       },
       { new: true }
     )
@@ -140,11 +139,14 @@ exports.update = (req, res, next) => {
 
 
 exports.updateState = (req, res, next) => {
+  var aa;
+  if(req.body.state=="Order Completed"){req.body.date=new Date()}
   CheckCart.update(
     {"orderId": req.params.orderId}, // filter
     { $set: { 
         "deliverPersonId" : req.body.deliverPersonId,
         "state":req.body.state,
+         "date":req.body.date
       }
     }, // update values
     { multi: true} )// options
